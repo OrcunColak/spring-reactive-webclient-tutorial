@@ -1,0 +1,13 @@
+webclient:
+  quote:
+    specific:
+      name: ${spring.application.name}
+      enabledMetrics: true
+      connection:
+        max: 100
+      timeout:
+        responseTimeout: 1200s
+      retry:
+        retryableCodes: 408,425,429,502,503,504
+        retryAttempts: 4
+        retryDelay: 4000

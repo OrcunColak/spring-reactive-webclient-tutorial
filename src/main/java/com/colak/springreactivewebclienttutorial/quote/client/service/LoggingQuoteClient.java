@@ -1,5 +1,7 @@
 package com.colak.springreactivewebclienttutorial.quote.client.service;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -8,17 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class QuoteClient {
+public class LoggingQuoteClient {
+
+    private final WebClient logginWebclient;
+
+    public LoggingQuoteClient(@Qualifier("loggingWebclient") WebClient logginWebclient) {
+        this.logginWebclient = logginWebclient;
+    }
 
     public Flux<String> getQuotesByWebFlux() {
-        WebClient webClient = WebClient.create("http://localhost:8080/api/v1/quote");
-
         List<Flux<String>> list = new ArrayList<>();
 
         for (int index = 0; index < 3; index++) {
-            Flux<String> flux = webClient
+            Flux<String> flux = logginWebclient
                     .get()
-                    .uri("/getQuotes")
+                    .uri("http://localhost:8080/api/v1/quote/getQuotes")
                     .retrieve()
                     .bodyToFlux(String.class);
             list.add(flux);
@@ -26,7 +32,7 @@ public class QuoteClient {
         return Flux.merge(list);
     }
 
-    public List<String> getQuotes() {
+    public List<String> getQuotesByLogging() {
         Flux<String> flux = getQuotesByWebFlux();
         return flux.collectList().block();
     }

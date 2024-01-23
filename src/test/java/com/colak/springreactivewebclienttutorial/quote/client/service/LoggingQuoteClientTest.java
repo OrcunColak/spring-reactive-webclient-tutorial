@@ -4,19 +4,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import reactor.core.publisher.Flux;
 
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-class QuoteClientTest {
+class LoggingQuoteClientTest {
 
     @Autowired
-    private QuoteClient quoteClient;
+    private LoggingQuoteClient quoteClient;
 
     @Test
     void testGetQuotes() {
-        List<String> result = quoteClient.getQuotes();
+        List<String> result = quoteClient.getQuotesByLogging();
         List<String> expected = List.of("quote1quote2", "quote1quote2", "quote1quote2");
         Assertions.assertEquals(expected, result);
     }
