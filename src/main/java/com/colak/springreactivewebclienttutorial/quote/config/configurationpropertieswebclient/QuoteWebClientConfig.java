@@ -1,4 +1,4 @@
-package com.colak.springreactivewebclienttutorial.quote.config;
+package com.colak.springreactivewebclienttutorial.quote.config.configurationpropertieswebclient;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,9 @@ public class QuoteWebClientConfig implements WebFluxConfigurer {
      * By default, WebClient uses the Reactor Netty library as the client connector, but you can customize it based on
      * your requirements.
      */
-    private ClientHttpConnector getClientHttpConnector(QuoteWebClientProperties.Connection connection, QuoteWebClientProperties.Specific specific, QuoteWebClientProperties.Timeout timeout) {
+    private ClientHttpConnector getClientHttpConnector(QuoteWebClientProperties.Connection connection,
+                                                       QuoteWebClientProperties.Specific specific,
+                                                       QuoteWebClientProperties.Timeout timeout) {
         ConnectionProvider connectionProvider = ConnectionProvider
                 .builder("quote-webclient-connectionProvider")
                 .maxConnections(connection.getMax())
