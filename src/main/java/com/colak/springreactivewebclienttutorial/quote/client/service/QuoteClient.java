@@ -28,6 +28,11 @@ public class QuoteClient {
 
     public List<String> getQuotes() {
         Flux<String> flux = getQuotesByWebFlux();
-        return flux.collectList().block();
+
+        return flux
+                // Merge all flux into a single Mono<List<String>>
+                .collectList()
+                // Convert Mono<List<String>> to List<String >
+                .block();
     }
 }
