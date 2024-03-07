@@ -2,32 +2,22 @@
 
 Flux<String> flux = webclient.get().uri("...").retrieve().bodyToFlux(String.class);
 
-# WebTestClient.get single
+# Customization
 
-webTestClient.get().uri("...").exchange().expectStatus().isOk().expectList(Student.class)
-.isEqualTo(...);
+Most of the code is as below.   
+We need to create a custom **reactor.netty.http.client.HttpClient** and pass to as clientConnector()
+**reactor.netty.http.client.HttpClient** class can have a custom  **reactor.netty.resources.ConnectionProvider**. Such as timeout etc.
+**reactor.netty.http.client.HttpClient** class can have a custom  **SsllContext**
 
-# WebTestClient.get list
+```
+ WebClient createWebClient() throws Exception {
+  return WebClient.builder()
+    .baseUrl(baseUrl)
+    .clientConnector(new ReactorClientHttpConnector(createHttpClient()))
+    .build();
+}
+```
 
-webTestClient.get().uri("...").exchange().expectStatus().isOk().expectBodyList(Student.class);
-.isEqualTo(List.of();
+# Codecs
 
-# WebTestClient.post Object
-
-Student student = ...;
-
-webTestClient.post().uri("...").body(Mono.just(student), Student.class).exchange()
-.expectStatus().isCreated();
-
-webTestClient.put().uri("...").body(Mono.just(updatedStudent), Student.class).exchange()
-.expectStatus().isOk()
-.expectBody(String.class).isEqualTo("Student updated successfully");
-
-# WebTestClient.post Json String
-
-String json =
-ApiErrorResponseDto errorResponse = WebTestClient
-.post().uri("...").contentType(MediaType.APPLICATION_JSON).bodyValue(json).exchange()
-.expectStatus().isCreated()
-.expectBody(ApiErrorResponseDto.class).returnResult().getResponseBody();
-
+WebClient can have codecs
