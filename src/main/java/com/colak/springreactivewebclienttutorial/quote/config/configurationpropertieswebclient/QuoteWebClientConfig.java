@@ -81,5 +81,13 @@ public class QuoteWebClientConfig implements WebFluxConfigurer {
                 .responseTimeout(timeout.getResponseTimeout());
 
         return new ReactorClientHttpConnector(httpClient);
+        //     Another way of timeout is
+        //     var client = WebClient.builder().baseUrl("https://api.example.com").build();
+        //     client.get()
+        //       .uri("/data")
+        //       .retrieve()
+        //       .bodyToMono(String.class)
+        //       .timeout(Duration.ofMillis(5000))
+        //       .subscribe(System.out::println);
     }
 }
