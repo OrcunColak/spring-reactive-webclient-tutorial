@@ -14,7 +14,3 @@ The original idea is from
 https://blog.stackademic.com/log-spring-webclient-request-and-response-412559f07a47
 This WebClient needs Jetty
 
-# SSL certificate pinning WebClient
-
-The original idea is from  
-https://medium.com/@d.s.m/perform-ssl-certificate-pinning-in-spring-f8b677db4f4a

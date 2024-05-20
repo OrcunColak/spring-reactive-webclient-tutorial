@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -13,6 +12,12 @@ class QuoteClientTest {
 
     @Autowired
     private QuoteClient quoteClient;
+
+    @Test
+    void testGetQuote() {
+        String result = quoteClient.getQuote();
+        Assertions.assertEquals("quote1", result);
+    }
 
     @Test
     void testGetQuotes() {

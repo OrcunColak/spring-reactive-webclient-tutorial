@@ -35,4 +35,15 @@ public class QuoteClient {
                 // Convert Mono<List<String>> to List<String >
                 .block();
     }
+
+    public String getQuote() {
+        WebClient webClient = WebClient.create("http://localhost:8080/api/v1/quote");
+        return webClient
+                .get()
+                .uri("/getQuote")
+                .retrieve()
+                .bodyToMono(String.class)
+                // .subscribe(data -> System.out.println("Received data for request " + index + ": " + data));
+                .block();
+    }
 }
