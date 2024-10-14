@@ -1,4 +1,4 @@
-package com.colak.springreactivewebclienttutorial.quote.client.service;
+package com.colak.springtutorial.quote.client.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

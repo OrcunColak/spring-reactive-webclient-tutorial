@@ -1,4 +1,4 @@
-package com.colak.springreactivewebclienttutorial.quote.client.service;
+package com.colak.springtutorial.quote.client.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,5 +1,6 @@
-package com.colak.springreactivewebclienttutorial.quote.config.configurationpropertieswebclient;
+package com.colak.springtutorial.quote.config.configurationpropertieswebclient;
 
+import io.netty.handler.timeout.ReadTimeoutHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,6 +18,7 @@ import reactor.netty.http.client.HttpClient;
 import reactor.netty.resources.ConnectionProvider;
 
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @ConditionalOnProperty(prefix = "webclient.quote.specific.connection", name = "max")
@@ -66,19 +68,7 @@ public class QuoteWebClientConfig implements WebFluxConfigurer {
     private ClientHttpConnector getClientHttpConnector(QuoteWebClientProperties.Connection connection,
                                                        QuoteWebClientProperties.Specific specific,
                                                        QuoteWebClientProperties.Timeout timeout) {
-        ConnectionProvider connectionProvider = ConnectionProvider
-                .builder("quote-webclient-connectionProvider")
-                .maxConnections(connection.getMax())
-                .name(specific.getName())
-                // Metrics for Web client
-                .metrics(specific.isEnabledMetrics())
-                .build();
-
-        // HttpClient is from reactor netty project
-        HttpClient httpClient = HttpClient
-                .create(connectionProvider)
-                // Setting Response Timeout
-                .responseTimeout(timeout.getResponseTimeout());
+        HttpClient httpClient = connectionPoolingClient(connection, specific, timeout);
 
         return new ReactorClientHttpConnector(httpClient);
         //     Another way of timeout is
@@ -89,5 +79,27 @@ public class QuoteWebClientConfig implements WebFluxConfigurer {
         //       .bodyToMono(String.class)
         //       .timeout(Duration.ofMillis(5000))
         //       .subscribe(System.out::println);
+    }
+
+    private static HttpClient connectionPoolingClient(QuoteWebClientProperties.Connection connection,
+                                                      QuoteWebClientProperties.Specific specific,
+                                                      QuoteWebClientProperties.Timeout timeout) {
+        // Create pool
+        ConnectionProvider connectionProvider = ConnectionProvider
+                .builder("quote-webclient-connectionProvider")
+                .maxConnections(connection.getMax())
+                .name(specific.getName())
+                // Metrics for Web client
+                .metrics(specific.isEnabledMetrics())
+                .build();
+
+        // HttpClient is from reactor netty project
+        return HttpClient
+                .create(connectionProvider)
+                .doOnConnected(conn -> conn
+                        .addHandlerLast(new ReadTimeoutHandler(5, TimeUnit.SECONDS))
+                        .addHandlerLast(new ReadTimeoutHandler(5, TimeUnit.SECONDS)))
+                // Setting Response Timeout
+                .responseTimeout(timeout.getResponseTimeout());
     }
 }

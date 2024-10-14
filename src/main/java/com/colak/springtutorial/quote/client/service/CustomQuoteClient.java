@@ -1,7 +1,5 @@
-package com.colak.springreactivewebclienttutorial.quote.client.service;
+package com.colak.springtutorial.quote.client.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

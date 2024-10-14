@@ -1,4 +1,4 @@
-package com.colak.springreactivewebclienttutorial.quote.config.configurationpropertieswebclient;
+package com.colak.springtutorial.quote.config.configurationpropertieswebclient;
 
 import lombok.Getter;
 import lombok.Setter;

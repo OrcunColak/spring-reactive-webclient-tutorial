@@ -1,4 +1,4 @@
-package com.colak.springreactivewebclienttutorial.quote.controller;
+package com.colak.springtutorial.quote.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

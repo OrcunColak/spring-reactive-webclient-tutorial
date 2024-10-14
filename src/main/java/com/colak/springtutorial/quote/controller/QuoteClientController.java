@@ -1,6 +1,6 @@
-package com.colak.springreactivewebclienttutorial.quote.controller;
+package com.colak.springtutorial.quote.controller;
 
-import com.colak.springreactivewebclienttutorial.quote.client.service.QuoteClient;
+import com.colak.springtutorial.quote.client.service.QuoteClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
