@@ -8,9 +8,5 @@ https://engineering.hexacta.com/quarkus-restclient-vs-spring-webflux-performance
 The original idea is from  
 https://medium.com/@dixitsatish34/custom-webclient-configuration-in-spring-boot-e1f9a1e45a47
 
-# Logging WebClient
 
-The original idea is from  
-https://blog.stackademic.com/log-spring-webclient-request-and-response-412559f07a47
-This WebClient needs Jetty
 
